@@ -1,0 +1,431 @@
+/* ==========================================================================
+   Curious Kids, Big Questions — "Storybook Night Sky" design system
+   Concept A (see design-concepts.md): night = wonder, paper = trust.
+   Palette sampled from the real Book 1 cover (deep navy + moon yellow).
+   System fonts only — no webfont downloads, static-first, mobile-first.
+   ========================================================================== */
+
+/* ---------- Design tokens ---------- */
+:root {
+  /* Colour — sky */
+  --night-950: #060d26;
+  --night-900: #0a1638;
+  --navy-800: #101f4b;
+  --navy-700: #16265c;
+  --navy-600: #1e3478;
+  --link: #2456c4;
+  --sky-100: #eaf2ff;
+  --sky-300: #bfd4ff;
+
+  /* Colour — moon */
+  --moon-500: #ffce2e;
+  --moon-400: #ffd949;
+  --moon-200: #ffe98a;
+  --moon-100: #fff3c4;
+  --moon-ink: #7a5b00;
+
+  /* Colour — paper (trust / reading surfaces) */
+  --paper-50: #fffbf0;
+  --paper-100: #fff6e0;
+  --paper-200: #fbefd2;
+  --card: #ffffff;
+
+  /* Colour — ink & accents */
+  --ink-900: #1c2440;
+  --ink-600: #4b5470;
+  --coral-400: #ff8a5c;
+  --line: #e8dfc6;
+  --line-soft: #efe7d2;
+
+  /* Type */
+  --font-display: "Arial Rounded MT Bold", "Helvetica Rounded", "Segoe UI",
+    system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial,
+    sans-serif;
+  --fs-display: clamp(2.45rem, 6.5vw, 3.7rem);
+  --fs-h1: clamp(2rem, 5vw, 3rem);
+  --fs-h2: clamp(1.55rem, 3.4vw, 2.1rem);
+  --fs-h3: 1.22rem;
+  --fs-lede: clamp(1.08rem, 2.4vw, 1.26rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.9rem;
+
+  /* Spacing & shape */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --section-y: clamp(48px, 8vw, 80px);
+  --radius-s: 12px;
+  --radius-m: 18px;
+  --radius-l: 24px;
+  --radius-xl: 30px;
+  --radius-pill: 999px;
+
+  /* Depth */
+  --shadow-card: 0 4px 18px rgba(16, 31, 75, 0.07);
+  --shadow-lift: 0 14px 34px rgba(16, 31, 75, 0.14);
+  --shadow-cover: 0 22px 48px rgba(3, 8, 24, 0.5);
+  --glow-moon: 0 0 84px rgba(255, 217, 73, 0.35);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  color: var(--ink-900);
+  background: var(--paper-50);
+  font-family: var(--font-body);
+  line-height: 1.65;
+  font-size: var(--fs-body);
+}
+
+::selection { background: var(--moon-200); color: var(--night-900); }
+
+.container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  line-height: 1.18;
+  color: var(--navy-700);
+  letter-spacing: -0.01em;
+}
+h1 { font-size: var(--fs-h1); margin: 0 0 0.5em; }
+h2 { font-size: var(--fs-h2); margin: 1.4em 0 0.55em; }
+h3 { font-size: var(--fs-h3); margin: 1.1em 0 0.4em; }
+p { margin: 0 0 1em; }
+a { color: var(--link); }
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible {
+  outline: 3px solid var(--moon-400); outline-offset: 2px;
+}
+
+.kicker, .eyebrow {
+  color: var(--moon-ink);
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  margin: 0 0 10px;
+}
+
+/* Starfield texture shared by the night zones (pure CSS, zero payload). */
+.hero, .page-head, .book-cta, .section--night {
+  background-image:
+    radial-gradient(2px 2px at 12% 30%, rgba(255,255,255,0.9) 50%, transparent 51%),
+    radial-gradient(1.6px 1.6px at 82% 18%, rgba(255,255,255,0.85) 50%, transparent 51%),
+    radial-gradient(2.2px 2.2px at 64% 62%, rgba(255,233,138,0.9) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 33% 74%, rgba(255,255,255,0.7) 50%, transparent 51%),
+    radial-gradient(1.8px 1.8px at 92% 55%, rgba(255,255,255,0.8) 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 47% 16%, rgba(255,255,255,0.75) 50%, transparent 51%),
+    radial-gradient(1.7px 1.7px at 22% 86%, rgba(255,233,138,0.8) 50%, transparent 51%),
+    radial-gradient(1.3px 1.3px at 71% 88%, rgba(255,255,255,0.65) 50%, transparent 51%);
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  background: linear-gradient(120deg, var(--night-900), var(--navy-700));
+  color: #fff;
+  position: sticky; top: 0; z-index: 20;
+  border-bottom: 1px solid rgba(255, 217, 73, 0.28);
+  box-shadow: 0 4px 18px rgba(6, 13, 38, 0.35);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding-top: 12px; padding-bottom: 12px; flex-wrap: wrap;
+}
+.brand {
+  display: flex; align-items: center; gap: 10px;
+  color: #fff; text-decoration: none;
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 1.25rem; line-height: 1.1;
+}
+.brand small {
+  display: block; font-weight: 700; font-size: 0.76rem;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--moon-400);
+}
+.brand-moon { width: 38px; height: 38px; flex: none; }
+.main-nav { display: flex; gap: 6px; flex-wrap: wrap; }
+.main-nav a {
+  color: var(--sky-100); text-decoration: none; font-weight: 600;
+  padding: 8px 13px; border-radius: var(--radius-pill);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.main-nav a:hover, .main-nav a:focus-visible {
+  background: rgba(255, 217, 73, 0.18); color: var(--moon-200);
+}
+
+/* ---------- Hero & page heads (the night zones) ---------- */
+.hero {
+  background-color: var(--night-900);
+  background-image:
+    radial-gradient(2px 2px at 12% 30%, rgba(255,255,255,0.9) 50%, transparent 51%),
+    radial-gradient(1.6px 1.6px at 82% 18%, rgba(255,255,255,0.85) 50%, transparent 51%),
+    radial-gradient(2.2px 2.2px at 64% 62%, rgba(255,233,138,0.9) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 33% 74%, rgba(255,255,255,0.7) 50%, transparent 51%),
+    radial-gradient(1.8px 1.8px at 92% 55%, rgba(255,255,255,0.8) 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 47% 16%, rgba(255,255,255,0.75) 50%, transparent 51%),
+    radial-gradient(1.7px 1.7px at 22% 86%, rgba(255,233,138,0.8) 50%, transparent 51%),
+    radial-gradient(1.3px 1.3px at 71% 88%, rgba(255,255,255,0.65) 50%, transparent 51%),
+    radial-gradient(560px 340px at 85% 8%, rgba(255, 217, 73, 0.14), transparent 70%),
+    linear-gradient(163deg, var(--navy-700) 0%, var(--night-900) 72%, var(--night-950) 100%);
+  color: var(--sky-100);
+  padding: clamp(52px, 8vw, 84px) 0 clamp(56px, 8vw, 88px);
+}
+.hero h1 { color: #fff; font-size: var(--fs-display); }
+.hero .kicker { color: var(--moon-400); }
+.hero .lede { font-size: var(--fs-lede); max-width: 620px; color: #dbe6ff; }
+.hero-grid { display: grid; gap: 40px; align-items: center; }
+@media (min-width: 820px) { .hero-grid { grid-template-columns: 1.22fr 0.78fr; } }
+
+.page-head {
+  background-color: var(--night-900);
+  background-image:
+    radial-gradient(1.8px 1.8px at 16% 34%, rgba(255,255,255,0.85) 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 86% 22%, rgba(255,255,255,0.8) 50%, transparent 51%),
+    radial-gradient(2px 2px at 68% 68%, rgba(255,233,138,0.85) 50%, transparent 51%),
+    radial-gradient(1.3px 1.3px at 38% 80%, rgba(255,255,255,0.6) 50%, transparent 51%),
+    linear-gradient(150deg, var(--navy-700), var(--night-900) 80%);
+  color: var(--sky-100);
+  padding: clamp(40px, 6vw, 58px) 0 clamp(34px, 5vw, 48px);
+}
+.page-head h1 { color: #fff; margin-bottom: 0.35em; }
+.page-head .kicker { color: var(--moon-400); }
+.page-head p { color: #dbe6ff; }
+.page-head a { color: var(--moon-200); }
+
+.btn {
+  display: inline-block; background: var(--moon-400); color: var(--night-900);
+  font-family: var(--font-display); font-weight: 800; text-decoration: none;
+  padding: 13px 24px; border-radius: var(--radius-pill);
+  border: 0; cursor: pointer; font-size: 1rem; line-height: 1.3;
+  box-shadow: 0 6px 18px rgba(255, 206, 46, 0.28);
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn:hover { background: var(--moon-500); transform: translateY(-1px); box-shadow: 0 10px 22px rgba(255, 206, 46, 0.34); }
+.btn.secondary {
+  background: transparent; color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.6); box-shadow: none;
+}
+.btn.secondary:hover { border-color: var(--moon-200); color: var(--moon-200); background: rgba(255, 217, 73, 0.08); }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+
+/* ---------- Trust strip (straight under the hero) ---------- */
+.trust-strip {
+  background: var(--paper-100);
+  border-bottom: 1px solid var(--line);
+}
+.trust-strip-inner {
+  display: flex; flex-wrap: wrap; gap: 10px 28px;
+  padding-top: 16px; padding-bottom: 16px;
+  justify-content: center;
+}
+@media (min-width: 820px) { .trust-strip-inner { justify-content: space-between; } }
+.trust-item {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-weight: 700; color: var(--navy-700); font-size: 0.98rem;
+}
+.trust-dot {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; flex: none; border-radius: 50%;
+  background: var(--moon-400); color: var(--night-900);
+  font-size: 0.8rem; line-height: 1;
+  box-shadow: 0 0 0 3px var(--moon-100);
+}
+
+/* ---------- Sections & cards (the paper zones) ---------- */
+.section { padding: var(--section-y) 0; }
+.section.alt {
+  background: linear-gradient(180deg, var(--paper-100), var(--paper-50));
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+.section--night {
+  background-color: var(--night-900);
+  background-image:
+    radial-gradient(1.8px 1.8px at 14% 26%, rgba(255,255,255,0.85) 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 84% 18%, rgba(255,255,255,0.75) 50%, transparent 51%),
+    radial-gradient(2px 2px at 66% 76%, rgba(255,233,138,0.85) 50%, transparent 51%),
+    radial-gradient(1.3px 1.3px at 36% 84%, rgba(255,255,255,0.6) 50%, transparent 51%),
+    linear-gradient(160deg, var(--navy-800), var(--night-950));
+  color: var(--sky-100);
+}
+.section--night h2, .section--night h3 { color: #fff; }
+
+.cards { display: grid; gap: 18px; }
+@media (min-width: 760px) { .cards.cols-3 { grid-template-columns: repeat(3, 1fr); } .cards.cols-2 { grid-template-columns: repeat(2, 1fr); } }
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-l);
+  padding: 24px; box-shadow: var(--shadow-card);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+.card h3 { margin-top: 0; }
+.card .q {
+  font-family: var(--font-display);
+  font-size: 1.18rem; font-weight: 700; color: var(--navy-700);
+  margin: 0 0 0.45em;
+}
+.card a { font-weight: 700; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.chip {
+  display: inline-block; background: var(--moon-100); color: var(--moon-ink);
+  font-size: 0.78rem; font-weight: 800; letter-spacing: 0.04em;
+  border: 1px solid var(--moon-200);
+  border-radius: var(--radius-pill); padding: 4px 12px; margin-bottom: 12px;
+}
+
+/* Featured book panel (home) */
+.featured-panel {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-xl);
+  padding: clamp(24px, 4vw, 40px); box-shadow: var(--shadow-lift);
+  display: grid; gap: 30px; align-items: center;
+}
+@media (min-width: 820px) { .featured-panel { grid-template-columns: 250px 1fr; } }
+.featured-panel .book-cover { max-width: 250px; }
+.featured-points { list-style: none; padding: 0; margin: 0 0 6px; display: grid; gap: 9px; }
+.featured-points li { position: relative; padding-left: 28px; font-weight: 600; }
+.featured-points li::before {
+  content: ""; position: absolute; left: 1px; top: 0.42em;
+  width: 11px; height: 11px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--moon-200), var(--moon-400));
+  box-shadow: 0 0 0 3px var(--moon-100);
+}
+
+.learn-list { list-style: none; columns: 1; padding: 0; margin: 0; display: grid; gap: 10px; }
+@media (min-width: 760px) { .learn-list { grid-template-columns: 1fr 1fr; column-gap: 34px; } }
+.learn-list li { position: relative; padding-left: 28px; }
+.learn-list li::before {
+  content: ""; position: absolute; left: 1px; top: 0.42em;
+  width: 11px; height: 11px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--moon-200), var(--moon-400));
+  box-shadow: 0 0 0 3px var(--moon-100);
+}
+
+.question-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+@media (min-width: 760px) { .question-list { grid-template-columns: 1fr 1fr; } }
+.question-list li {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-m);
+  padding: 12px 16px; font-weight: 600; box-shadow: var(--shadow-card);
+}
+.question-list .num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 27px; height: 27px; flex: none; border-radius: 50%;
+  background: var(--moon-400); color: var(--night-900);
+  font-family: var(--font-display); font-weight: 800; font-size: 0.88rem;
+}
+
+/* ---------- Book cover (real art) ---------- */
+.book-cover {
+  position: relative; border-radius: var(--radius-m); overflow: hidden;
+  max-width: 320px; margin: 0 auto; width: 100%;
+  box-shadow: var(--shadow-cover), var(--glow-moon);
+  background: var(--navy-700);
+}
+.book-cover-img { display: block; width: 100%; height: auto; }
+.hero-cover { position: relative; }
+.hero-cover::before {
+  content: ""; position: absolute; inset: -14% -10%;
+  background: radial-gradient(circle at 50% 42%, rgba(255, 217, 73, 0.22), transparent 62%);
+  pointer-events: none;
+}
+
+/* ---------- Article ---------- */
+.article { max-width: 760px; }
+.article .answer-lead { font-size: var(--fs-lede); color: var(--ink-600); }
+.article h2 { margin-top: 1.4em; }
+.try-it {
+  background: linear-gradient(180deg, #fff8e1, var(--paper-100));
+  border: 1px solid #f0df8e; border-radius: var(--radius-l);
+  padding: 20px 24px; margin: 26px 0;
+  box-shadow: var(--shadow-card);
+}
+.try-it h2, .try-it h3 { margin-top: 0; }
+.book-cta {
+  background-color: var(--navy-800);
+  background-image:
+    radial-gradient(1.8px 1.8px at 14% 26%, rgba(255,255,255,0.85) 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 84% 18%, rgba(255,255,255,0.75) 50%, transparent 51%),
+    radial-gradient(2px 2px at 66% 76%, rgba(255,233,138,0.85) 50%, transparent 51%),
+    linear-gradient(140deg, var(--navy-700), var(--night-900));
+  color: var(--sky-100);
+  border-radius: var(--radius-l); padding: 28px; margin: 36px 0;
+  box-shadow: var(--shadow-lift);
+}
+.book-cta h2 { color: #fff; margin-top: 0; }
+
+/* ---------- FAQ ---------- */
+.faq-list { display: grid; gap: 10px; }
+.faq-item {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius-m); padding: 4px 20px;
+  box-shadow: var(--shadow-card);
+}
+.faq-item summary {
+  cursor: pointer; font-family: var(--font-display); font-weight: 700;
+  padding: 13px 0; color: var(--navy-700); list-style: none;
+  display: flex; justify-content: space-between; align-items: center; gap: 14px;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+"; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--moon-100); color: var(--moon-ink);
+  font-size: 1.05rem; font-weight: 800; line-height: 1;
+  transition: transform 0.18s ease;
+}
+.faq-item[open ] summary::after { transform: rotate(45deg); }
+.faq-item p { padding-bottom: 14px; }
+
+/* ---------- Email capture ---------- */
+.email-capture {
+  background: var(--card); border: 2px solid var(--moon-400); border-radius: var(--radius-xl);
+  padding: clamp(24px, 4vw, 34px); text-align: center;
+  box-shadow: var(--shadow-lift);
+}
+.section--night .email-capture { box-shadow: var(--shadow-lift), var(--glow-moon); }
+.email-capture h2 { margin-top: 0; }
+.capture-form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+.capture-form input {
+  padding: 13px 18px; border-radius: var(--radius-pill); border: 1px solid var(--line);
+  background: var(--paper-50);
+  font-size: 1rem; min-width: min(300px, 100%); color: var(--ink-900);
+}
+.capture-form button {
+  background: var(--navy-700); color: #fff; border: 0; border-radius: var(--radius-pill);
+  padding: 13px 24px; font-family: var(--font-display); font-weight: 700; font-size: 1rem; cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.capture-form button:hover { background: var(--night-900); transform: translateY(-1px); }
+.capture-done { font-weight: 700; color: var(--navy-700); }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background:
+    radial-gradient(1.6px 1.6px at 18% 22%, rgba(255,255,255,0.7) 50%, transparent 51%),
+    radial-gradient(1.3px 1.3px at 78% 14%, rgba(255,233,138,0.8) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 58% 30%, rgba(255,255,255,0.55) 50%, transparent 51%),
+    var(--night-950);
+  color: #c6d3f2; padding: 44px 0 32px;
+  border-top: 1px solid rgba(255, 217, 73, 0.22);
+}
+.footer-brand {
+  color: #fff; font-family: var(--font-display);
+  font-weight: 800; font-size: 1.18rem; margin: 0 0 0.4em;
+}
+.footer-nav { display: flex; gap: 18px; flex-wrap: wrap; margin: 16px 0; }
+.footer-nav a { color: var(--moon-400); text-decoration: none; font-weight: 600; }
+.footer-nav a:hover { color: var(--moon-200); text-decoration: underline; }
+.footer-fine { font-size: var(--fs-small); color: #8fa1cc; margin: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .card, .btn, .faq-item summary::after, .capture-form button { transition: none; }
+}
