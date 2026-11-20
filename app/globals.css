@@ -389,9 +389,11 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   background: var(--card); border: 2px solid var(--moon-400); border-radius: var(--radius-xl);
   padding: clamp(24px, 4vw, 34px); text-align: center;
   box-shadow: var(--shadow-lift);
+  color: var(--ink-900);
 }
 .section--night .email-capture { box-shadow: var(--shadow-lift), var(--glow-moon); }
 .email-capture h2 { margin-top: 0; }
+.section--night .email-capture h2 { color: var(--ink-900); }
 .capture-form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
 .capture-form input {
   padding: 13px 18px; border-radius: var(--radius-pill); border: 1px solid var(--line);
@@ -413,7 +415,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
     radial-gradient(1.3px 1.3px at 78% 14%, rgba(255,233,138,0.8) 50%, transparent 51%),
     radial-gradient(1.5px 1.5px at 58% 30%, rgba(255,255,255,0.55) 50%, transparent 51%),
     var(--night-950);
-  color: #c6d3f2; padding: 44px 0 32px;
+  color: #dbe4fa; padding: 44px 0 32px;
   border-top: 1px solid rgba(255, 217, 73, 0.22);
 }
 .footer-brand {
@@ -423,9 +425,40 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .footer-nav { display: flex; gap: 18px; flex-wrap: wrap; margin: 16px 0; }
 .footer-nav a { color: var(--moon-400); text-decoration: none; font-weight: 600; }
 .footer-nav a:hover { color: var(--moon-200); text-decoration: underline; }
-.footer-fine { font-size: var(--fs-small); color: #8fa1cc; margin: 0; }
+.footer-fine { font-size: var(--fs-small); color: #aab9e6; margin: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .card, .btn, .faq-item summary::after, .capture-form button { transition: none; }
 }
+
+/* ---------- Chatbot (static, client-side) ---------- */
+.chatbot { position: fixed; right: 18px; bottom: 18px; z-index: 60; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.chatbot-fab { background: var(--night-900); color: #fff; border: 2px solid var(--moon-400); border-radius: var(--radius-pill); padding: 12px 20px; font-family: var(--font-display); font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: var(--shadow-lift); }
+.chatbot-fab:hover { background: var(--navy-700); }
+.chatbot-panel { width: min(360px, calc(100vw - 36px)); max-height: min(560px, calc(100vh - 90px)); display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-l); box-shadow: var(--shadow-lift); overflow: hidden; }
+.chatbot-head { display: flex; justify-content: space-between; align-items: center; background: var(--night-900); color: #fff; padding: 12px 16px; }
+.chatbot-head button { background: none; border: 0; color: #fff; font-size: 1.4rem; cursor: pointer; line-height: 1; }
+.chatbot-log { padding: 14px; overflow-y: auto; display: grid; gap: 10px; flex: 1; }
+.chatbot-msg { border-radius: var(--radius-m); padding: 10px 12px; }
+.chatbot-msg p { margin: 0; }
+.chatbot-msg a { font-weight: 700; display: inline-block; margin-top: 6px; }
+.chatbot-msg--bot { background: var(--sky-100); }
+.chatbot-msg--user { background: var(--moon-100); justify-self: end; max-width: 90%; }
+.chatbot-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 14px 10px; }
+.chatbot-chips button { background: var(--paper-100); border: 1px solid var(--line); border-radius: var(--radius-pill); padding: 6px 10px; font-size: 0.85rem; cursor: pointer; }
+.chatbot-form { display: flex; gap: 8px; padding: 0 14px 12px; }
+.chatbot-form input { flex: 1; padding: 10px 14px; border-radius: var(--radius-pill); border: 1px solid var(--line); font-size: 1rem; min-width: 0; }
+.chatbot-form button { background: var(--navy-700); color: #fff; border: 0; border-radius: var(--radius-pill); padding: 10px 16px; font-weight: 700; cursor: pointer; }
+.chatbot-note { font-size: 0.8rem; color: var(--ink-600); padding: 0 14px 12px; margin: 0; }
+
+/* ---------- Tools (quiz + calculator) ---------- */
+.tool-grid { display: grid; gap: 14px; margin: 18px 0; }
+.tool-option { display: flex; gap: 10px; align-items: flex-start; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-m); padding: 12px 14px; cursor: pointer; }
+.tool-option input { margin-top: 4px; }
+.tool-field { margin: 18px 0; }
+.tool-field legend, .tool-field > strong { font-family: var(--font-display); color: var(--navy-700); display: block; margin-bottom: 8px; }
+.tool-result { background: var(--sky-100); border: 1px solid var(--sky-300); border-radius: var(--radius-l); padding: 20px 24px; margin-top: 24px; }
+.tool-result h2, .tool-result h3 { margin-top: 0; }
+.tool-total { font-size: 1.4rem; font-weight: 800; color: var(--navy-700); }
+.tool-note { font-size: var(--fs-small); color: var(--ink-600); }
